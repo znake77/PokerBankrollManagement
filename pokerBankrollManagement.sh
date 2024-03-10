@@ -5,16 +5,22 @@ bankroll=0
 
 # Function to add winnings to bankroll
 function add_winnings() {
-    echo "Enter winnings: "
-    read winnings
-    bankroll=$((bankroll + winnings))
+    read -p "Enter winnings: " winnings
+    if [[ $winnings =~ ^[0-9]+$ ]]; then
+        bankroll=$((bankroll + winnings))
+    else
+        echo "Invalid input. Please enter a number."
+    fi
 }
 
 # Function to subtract losses from bankroll
 function subtract_losses() {
-    echo "Enter losses: "
-    read losses
-    bankroll=$((bankroll - losses))
+    read -p "Enter losses: " losses
+    if [[ $losses =~ ^[0-9]+$ ]]; then
+        bankroll=$((bankroll - losses))
+    else
+        echo "Invalid input. Please enter a number."
+    fi
 }
 
 # Function to display bankroll
@@ -29,7 +35,7 @@ while true; do
     echo "2. Subtract losses"
     echo "3. Display bankroll"
     echo "4. Exit"
-    read choice
+    read -p "Enter your choice: " choice
 
     case $choice in
         1)
@@ -42,6 +48,7 @@ while true; do
             display_bankroll
             ;;
         4)
+            echo "Exiting the program."
             break
             ;;
         *)
@@ -49,3 +56,4 @@ while true; do
             ;;
     esac
 done
+
