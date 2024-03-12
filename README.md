@@ -1,6 +1,6 @@
 # Poker Bankroll Management
 
-This script is your ultimate poker bankroll management tool, designed to help you keep track of your poker winnings and losses. It works by allowing you to add your winnings, subtract your losses, and display your current bankroll. Here's how it can help you:
+This script is your ultimate poker bankroll management tool, designed to help you keep track of your poker winnings and losses. It works by allowing you to add your winnings, subtract your losses, and display your current bankroll. Additionally, it allows you to save and load different sessions. Here's how it can help you:
 
 1. **Add Winnings**: The script provides a function to add your winnings to your bankroll. You simply need to enter the amount you've won, and the script will add it to your bankroll.
 
@@ -8,9 +8,11 @@ This script is your ultimate poker bankroll management tool, designed to help yo
 
 3. **Display Bankroll**: The script allows you to display your current bankroll at any time. This can help you keep track of your finances and make informed decisions about your poker game.
 
+4. **Set Session Name**: The script allows you to set a session name. If you leave the session name blank, it will default to "default_session". The script will load the bankroll from the session file if it exists.
+
 The script runs in a loop, allowing you to continuously update and check your bankroll. You can exit the loop at any time by choosing the exit option.
 
-To use the script, simply run it in your terminal. It will prompt you to choose an action, and you can follow the prompts to add winnings, subtract losses, or display your bankroll.
+To use the script, simply run it in your terminal. It will prompt you to choose an action, and you can follow the prompts to add winnings, subtract losses, display your bankroll, or set a session name.
 
 ## Getting Started
 
