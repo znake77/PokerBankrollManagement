@@ -31,8 +31,12 @@ function add_winnings() {
 function subtract_losses() {
     read -p "Enter losses: " losses
     if [[ $losses =~ ^[0-9]+$ ]]; then
-        bankroll=$((bankroll - losses))
-        save_session
+        if (( losses > bankroll )); then
+            echo "Insufficient funds. Your current bankroll is $bankroll."
+        else
+            bankroll=$((bankroll - losses))
+            save_session
+        fi
     else
         echo "Invalid input. Please enter a number."
     fi
