@@ -1,8 +1,7 @@
-#!/bin/bash
-
 # Initialize bankroll to 0
 bankroll=0
 session_file="default_session"
+history_file="history.log"
 
 # Function to load session
 function load_session() {
@@ -16,11 +15,17 @@ function save_session() {
     echo "$bankroll" > "$session_file"
 }
 
+# Function to log transactions
+function log_transaction() {
+    echo "$(date): $1" >> "$history_file"
+}
+
 # Function to add winnings to bankroll
 function add_winnings() {
     read -p "Enter winnings: " winnings
     if [[ $winnings =~ ^[0-9]+$ ]]; then
         bankroll=$((bankroll + winnings))
+        log_transaction "Added $winnings to bankroll. New total: $bankroll"
         save_session
     else
         echo "Invalid input. Please enter a number."
@@ -35,6 +40,7 @@ function subtract_losses() {
             echo "Insufficient funds. Your current bankroll is $bankroll."
         else
             bankroll=$((bankroll - losses))
+            log_transaction "Subtracted $losses from bankroll. New total: $bankroll"
             save_session
         fi
     else
@@ -45,6 +51,15 @@ function subtract_losses() {
 # Function to display bankroll
 function display_bankroll() {
     echo "Your current bankroll is: $bankroll"
+}
+
+# Function to display transaction history
+function display_history() {
+    if [ -f "$history_file" ]; then
+        cat "$history_file"
+    else
+        echo "No transaction history found."
+    fi
 }
 
 # Function to set session name
@@ -65,7 +80,8 @@ while true; do
     echo "2. Subtract losses"
     echo "3. Display bankroll"
     echo "4. Set session name"
-    echo "5. Exit"
+    echo "5. Display transaction history"
+    echo "6. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -82,11 +98,14 @@ while true; do
             set_session_name
             ;;
         5)
+            display_history
+            ;;
+        6)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 5."
+            echo "Invalid choice. Please choose a number between 1 and 6."
             ;;
     esac
 done
