@@ -73,7 +73,14 @@ function set_session_name() {
     load_session
 }
 
-# Main loop
+# Function to backup session
+function backup_session() {
+    backup_file="${session_file}_backup"
+    cp "$session_file" "$backup_file"
+    echo "Session has been backed up to $backup_file."
+}
+
+# Add backup option to main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
@@ -81,7 +88,8 @@ while true; do
     echo "3. Display bankroll"
     echo "4. Set session name"
     echo "5. Display transaction history"
-    echo "6. Exit"
+    echo "6. Backup session"
+    echo "7. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -101,11 +109,14 @@ while true; do
             display_history
             ;;
         6)
+            backup_session
+            ;;
+        7)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 6."
+            echo "Invalid choice. Please choose a number between 1 and 7."
             ;;
     esac
 done
