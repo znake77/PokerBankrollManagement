@@ -80,7 +80,19 @@ function backup_session() {
     echo "Session has been backed up to $backup_file."
 }
 
-# Add backup option to main loop
+# Function to restore session from backup
+function restore_session() {
+    backup_file="${session_file}_backup"
+    if [ -f "$backup_file" ]; then
+        cp "$backup_file" "$session_file"
+        echo "Session has been restored from $backup_file."
+        load_session
+    else
+        echo "No backup found for this session."
+    fi
+}
+
+# Add restore option to main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
@@ -89,7 +101,8 @@ while true; do
     echo "4. Set session name"
     echo "5. Display transaction history"
     echo "6. Backup session"
-    echo "7. Exit"
+    echo "7. Restore session from backup"
+    echo "8. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -112,11 +125,14 @@ while true; do
             backup_session
             ;;
         7)
+            restore_session
+            ;;
+        8)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 7."
+            echo "Invalid choice. Please choose a number between 1 and 8."
             ;;
     esac
 done
