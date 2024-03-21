@@ -28,7 +28,7 @@ function add_winnings() {
         log_transaction "Added $winnings to bankroll. New total: $bankroll"
         save_session
     else
-        echo "Invalid input. Please enter a number."
+        echo "Invalid input. Please enter a positive number."
     fi
 }
 
@@ -44,7 +44,7 @@ function subtract_losses() {
             save_session
         fi
     else
-        echo "Invalid input. Please enter a number."
+        echo "Invalid input. Please enter a positive number."
     fi
 }
 
