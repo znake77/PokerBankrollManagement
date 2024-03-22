@@ -19,6 +19,7 @@ function save_session() {
 function log_transaction() {
     echo "$(date): $1" >> "$history_file"
 }
+# Adding a new feature to validate if the winnings or losses entered are not negative numbers.
 
 # Function to add winnings to bankroll
 function add_winnings() {
