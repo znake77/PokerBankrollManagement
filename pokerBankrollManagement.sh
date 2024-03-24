@@ -19,8 +19,8 @@ function save_session() {
 function log_transaction() {
     echo "$(date): $1" >> "$history_file"
 }
-# Adding a new feature to validate if the winnings or losses entered are not negative numbers.
 
+# Adding a new feature to validate if the winnings or losses entered are not negative numbers.
 # Function to add winnings to bankroll
 function add_winnings() {
     read -p "Enter winnings: " winnings
@@ -90,6 +90,18 @@ function restore_session() {
         load_session
     else
         echo "No backup found for this session."
+    fi
+}
+
+# Adding a new feature to validate if the session name entered is not empty.
+# Function to set session name
+function set_session_name() {
+    read -p "Enter session name (leave blank for default): " name
+    if [ -z "$name" ]; then
+        echo "Invalid input. Session name cannot be empty."
+    else
+        session_file="$name"
+        load_session
     fi
 }
 
