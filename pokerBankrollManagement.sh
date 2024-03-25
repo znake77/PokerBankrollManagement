@@ -93,15 +93,15 @@ function restore_session() {
     fi
 }
 
-# Adding a new feature to validate if the session name entered is not empty.
+# Adding a new feature to validate if the session name entered contains only alphanumeric characters.
 # Function to set session name
 function set_session_name() {
     read -p "Enter session name (leave blank for default): " name
-    if [ -z "$name" ]; then
-        echo "Invalid input. Session name cannot be empty."
-    else
+    if [[ $name =~ ^[a-zA-Z0-9]+$ ]]; then
         session_file="$name"
         load_session
+    else
+        echo "Invalid input. Session name can only contain alphanumeric characters."
     fi
 }
 
