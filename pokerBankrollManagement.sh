@@ -63,36 +63,6 @@ function display_history() {
     fi
 }
 
-# Function to set session name
-function set_session_name() {
-    read -p "Enter session name (leave blank for default): " name
-    if [ -z "$name" ]; then
-        session_file="default_session"
-    else
-        session_file="$name"
-    fi
-    load_session
-}
-
-# Function to backup session
-function backup_session() {
-    backup_file="${session_file}_backup"
-    cp "$session_file" "$backup_file"
-    echo "Session has been backed up to $backup_file."
-}
-
-# Function to restore session from backup
-function restore_session() {
-    backup_file="${session_file}_backup"
-    if [ -f "$backup_file" ]; then
-        cp "$backup_file" "$session_file"
-        echo "Session has been restored from $backup_file."
-        load_session
-    else
-        echo "No backup found for this session."
-    fi
-}
-
 # Adding a new feature to validate if the session name entered contains only alphanumeric characters and is not empty.
 # Function to set session name
 function set_session_name() {
@@ -106,6 +76,33 @@ function set_session_name() {
         echo "Invalid input. Session name can only contain alphanumeric characters."
     fi
 }
+
+# Adding a new feature to validate if the backup name entered contains only alphanumeric characters and is not empty.
+# Function to backup session
+function backup_session() {
+    read -p "Enter backup name (leave blank for default): " backup_name
+    if [[ -z "$backup_name" ]]; then
+        echo "Backup name cannot be empty. Please enter a valid name."
+    elif [[ $backup_name =~ ^[a-zA-Z0-9]+$ ]]; then
+        backup_file="${backup_name}_backup"
+        cp "$session_file" "$backup_file"
+        echo "Session has been backed up to $backup_file."
+    else
+        echo "Invalid input. Backup name can only contain alphanumeric characters."
+    fi
+}
+# Function to restore session from backup
+function restore_session() {
+    backup_file="${session_file}_backup"
+    if [ -f "$backup_file" ]; then
+        cp "$backup_file" "$session_file"
+        echo "Session has been restored from $backup_file."
+        load_session
+    else
+        echo "No backup found for this session."
+    fi
+}
+
 # Add restore option to main loop
 while true; do
     echo "What would you like to do?"
