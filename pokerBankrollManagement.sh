@@ -103,17 +103,31 @@ function restore_session() {
     fi
 }
 
-# Add restore option to main loop
+# Adding a new feature to validate if the bankroll is not a negative number.
+# Function to set bankroll
+function set_bankroll() {
+    read -p "Enter bankroll: " new_bankroll
+    if [[ $new_bankroll =~ ^[0-9]+$ ]]; then
+        bankroll=$new_bankroll
+        log_transaction "Bankroll set to $bankroll"
+        save_session
+    else
+        echo "Invalid input. Please enter a positive number."
+    fi
+}
+
+# Main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
     echo "2. Subtract losses"
     echo "3. Display bankroll"
-    echo "4. Set session name"
-    echo "5. Display transaction history"
-    echo "6. Backup session"
-    echo "7. Restore session from backup"
-    echo "8. Exit"
+    echo "4. Set bankroll"
+    echo "5. Set session name"
+    echo "6. Display transaction history"
+    echo "7. Backup session"
+    echo "8. Restore session from backup"
+    echo "9. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -127,23 +141,26 @@ while true; do
             display_bankroll
             ;;
         4)
-            set_session_name
+            set_bankroll
             ;;
         5)
-            display_history
+            set_session_name
             ;;
         6)
-            backup_session
+            display_history
             ;;
         7)
-            restore_session
+            backup_session
             ;;
         8)
+            restore_session
+            ;;
+        9)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 8."
+            echo "Invalid choice. Please choose a number between 1 and 9."
             ;;
     esac
 done
