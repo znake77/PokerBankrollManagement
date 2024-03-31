@@ -103,14 +103,18 @@ function restore_session() {
     fi
 }
 
-# Adding a new feature to validate if the bankroll is not a negative number.
+# Adding a new feature to validate if the bankroll is not exceeding a certain limit.
 # Function to set bankroll
 function set_bankroll() {
     read -p "Enter bankroll: " new_bankroll
     if [[ $new_bankroll =~ ^[0-9]+$ ]]; then
-        bankroll=$new_bankroll
-        log_transaction "Bankroll set to $bankroll"
-        save_session
+        if (( new_bankroll > 1000000 )); then
+            echo "Bankroll cannot exceed 1,000,000."
+        else
+            bankroll=$new_bankroll
+            log_transaction "Bankroll set to $bankroll"
+            save_session
+        fi
     else
         echo "Invalid input. Please enter a positive number."
     fi
