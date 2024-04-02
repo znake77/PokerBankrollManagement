@@ -120,6 +120,14 @@ function set_bankroll() {
     fi
 }
 
+# Adding a new feature to allow the user to reset the bankroll to 0.
+# Function to reset bankroll
+function reset_bankroll() {
+    bankroll=0
+    log_transaction "Bankroll reset to 0"
+    save_session
+}
+
 # Main loop
 while true; do
     echo "What would you like to do?"
@@ -127,11 +135,12 @@ while true; do
     echo "2. Subtract losses"
     echo "3. Display bankroll"
     echo "4. Set bankroll"
-    echo "5. Set session name"
-    echo "6. Display transaction history"
-    echo "7. Backup session"
-    echo "8. Restore session from backup"
-    echo "9. Exit"
+    echo "5. Reset bankroll"
+    echo "6. Set session name"
+    echo "7. Display transaction history"
+    echo "8. Backup session"
+    echo "9. Restore session from backup"
+    echo "10. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -148,23 +157,26 @@ while true; do
             set_bankroll
             ;;
         5)
-            set_session_name
+            reset_bankroll
             ;;
         6)
-            display_history
+            set_session_name
             ;;
         7)
-            backup_session
+            display_history
             ;;
         8)
-            restore_session
+            backup_session
             ;;
         9)
+            restore_session
+            ;;
+        10)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 9."
+            echo "Invalid choice. Please choose a number between 1 and 10."
             ;;
     esac
 done
