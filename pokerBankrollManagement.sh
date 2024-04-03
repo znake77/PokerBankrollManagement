@@ -128,6 +128,18 @@ function reset_bankroll() {
     save_session
 }
 
+# Adding a new feature to allow the user to delete a session.
+# Function to delete session
+function delete_session() {
+    read -p "Are you sure you want to delete this session? (y/n): " confirm
+    if [[ $confirm == "y" || $confirm == "Y" ]]; then
+        rm "$session_file"
+        echo "Session has been deleted."
+    else
+        echo "Session deletion cancelled."
+    fi
+}
+
 # Main loop
 while true; do
     echo "What would you like to do?"
@@ -140,7 +152,8 @@ while true; do
     echo "7. Display transaction history"
     echo "8. Backup session"
     echo "9. Restore session from backup"
-    echo "10. Exit"
+    echo "10. Delete session"
+    echo "11. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -172,11 +185,14 @@ while true; do
             restore_session
             ;;
         10)
+            delete_session
+            ;;
+        11)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 10."
+            echo "Invalid choice. Please choose a number between 1 and 11."
             ;;
     esac
 done
