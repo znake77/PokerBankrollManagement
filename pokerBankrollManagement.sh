@@ -140,7 +140,19 @@ function delete_session() {
     fi
 }
 
-# Main loop
+# Adding a new feature to allow the user to clear transaction history.
+# Function to clear transaction history
+function clear_history() {
+    read -p "Are you sure you want to clear transaction history? (y/n): " confirm
+    if [[ $confirm == "y" || $confirm == "Y" ]]; then
+        > "$history_file"
+        echo "Transaction history has been cleared."
+    else
+        echo "Transaction history clearing cancelled."
+    fi
+}
+
+# main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
@@ -150,10 +162,11 @@ while true; do
     echo "5. Reset bankroll"
     echo "6. Set session name"
     echo "7. Display transaction history"
-    echo "8. Backup session"
-    echo "9. Restore session from backup"
-    echo "10. Delete session"
-    echo "11. Exit"
+    echo "8. Clear transaction history"
+    echo "9. Backup session"
+    echo "10. Restore session from backup"
+    echo "11. Delete session"
+    echo "12. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -179,20 +192,23 @@ while true; do
             display_history
             ;;
         8)
-            backup_session
+            clear_history
             ;;
         9)
-            restore_session
+            backup_session
             ;;
         10)
-            delete_session
+            restore_session
             ;;
         11)
+            delete_session
+            ;;
+        12)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 11."
+            echo "Invalid choice. Please choose a number between 1 and 12."
             ;;
     esac
 done
