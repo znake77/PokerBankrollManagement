@@ -152,7 +152,13 @@ function clear_history() {
     fi
 }
 
-# main loop
+# Adding a new feature to allow the user to view the current session name.
+# Function to view session name
+function view_session_name() {
+    echo "Current session name is: $session_file"
+}
+
+# Main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
@@ -161,12 +167,13 @@ while true; do
     echo "4. Set bankroll"
     echo "5. Reset bankroll"
     echo "6. Set session name"
-    echo "7. Display transaction history"
-    echo "8. Clear transaction history"
-    echo "9. Backup session"
-    echo "10. Restore session from backup"
-    echo "11. Delete session"
-    echo "12. Exit"
+    echo "7. View session name"
+    echo "8. Display transaction history"
+    echo "9. Clear transaction history"
+    echo "10. Backup session"
+    echo "11. Restore session from backup"
+    echo "12. Delete session"
+    echo "13. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -189,26 +196,29 @@ while true; do
             set_session_name
             ;;
         7)
-            display_history
+            view_session_name
             ;;
         8)
-            clear_history
+            display_history
             ;;
         9)
-            backup_session
+            clear_history
             ;;
         10)
-            restore_session
+            backup_session
             ;;
         11)
-            delete_session
+            restore_session
             ;;
         12)
+            delete_session
+            ;;
+        13)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 12."
+            echo "Invalid choice. Please choose a number between 1 and 13."
             ;;
     esac
 done
