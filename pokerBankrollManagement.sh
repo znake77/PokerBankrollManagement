@@ -158,6 +158,17 @@ function view_session_name() {
     echo "Current session name is: $session_file"
 }
 
+# Adding a new feature to allow the user to view the current backup name.
+# Function to view backup name
+function view_backup_name() {
+    backup_file="${session_file}_backup"
+    if [ -f "$backup_file" ]; then
+        echo "Current backup name is: $backup_file"
+    else
+        echo "No backup found for this session."
+    fi
+}
+
 # Main loop
 while true; do
     echo "What would you like to do?"
@@ -173,7 +184,8 @@ while true; do
     echo "10. Backup session"
     echo "11. Restore session from backup"
     echo "12. Delete session"
-    echo "13. Exit"
+    echo "13. View backup name"
+    echo "14. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -214,11 +226,14 @@ while true; do
             delete_session
             ;;
         13)
+            view_backup_name
+            ;;
+        14)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 13."
+            echo "Invalid choice. Please choose a number between 1 and 14."
             ;;
     esac
 done
