@@ -169,6 +169,18 @@ function view_backup_name() {
     fi
 }
 
+# Adding a new feature to allow the user to import transaction history from a file.
+# Function to import transaction history
+function import_history() {
+    read -p "Enter the name of the file to import: " import_file
+    if [[ -f "$import_file" ]]; then
+        cat "$import_file" >> "$history_file"
+        echo "Transaction history has been imported from $import_file."
+    else
+        echo "File not found. Please enter a valid file name."
+    fi
+}
+
 # Main loop
 while true; do
     echo "What would you like to do?"
@@ -185,7 +197,8 @@ while true; do
     echo "11. Restore session from backup"
     echo "12. Delete session"
     echo "13. View backup name"
-    echo "14. Exit"
+    echo "14. Import transaction history"
+    echo "15. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -229,11 +242,14 @@ while true; do
             view_backup_name
             ;;
         14)
+            import_history
+            ;;
+        15)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 14."
+            echo "Invalid choice. Please choose a number between 1 and 15."
             ;;
     esac
 done
