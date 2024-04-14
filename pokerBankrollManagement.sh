@@ -181,7 +181,19 @@ function import_history() {
     fi
 }
 
-# Main loop
+# Adding a new feature to allow the user to export transaction history to a file.
+# Function to export transaction history
+function export_history() {
+    read -p "Enter the name of the file to export to: " export_file
+    if [[ -n "$export_file" ]]; then
+        cp "$history_file" "$export_file"
+        echo "Transaction history has been exported to $export_file."
+    else
+        echo "Invalid input. Please enter a valid file name."
+    fi
+}
+
+# Adding the new option to the main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
@@ -198,7 +210,8 @@ while true; do
     echo "12. Delete session"
     echo "13. View backup name"
     echo "14. Import transaction history"
-    echo "15. Exit"
+    echo "15. Export transaction history"
+    echo "16. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -245,11 +258,14 @@ while true; do
             import_history
             ;;
         15)
+            export_history
+            ;;
+        16)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 15."
+            echo "Invalid choice. Please choose a number between 1 and 16."
             ;;
     esac
 done
