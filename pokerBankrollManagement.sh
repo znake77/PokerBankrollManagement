@@ -193,7 +193,13 @@ function export_history() {
     fi
 }
 
-# Adding the new option to the main loop
+# Adding a new feature to allow the user to view the current bankroll limit.
+# Function to view bankroll limit
+function view_bankroll_limit() {
+    echo "Current bankroll limit is: 1,000,000"
+}
+
+# Main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
@@ -211,7 +217,8 @@ while true; do
     echo "13. View backup name"
     echo "14. Import transaction history"
     echo "15. Export transaction history"
-    echo "16. Exit"
+    echo "16. View bankroll limit"
+    echo "17. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -261,11 +268,14 @@ while true; do
             export_history
             ;;
         16)
+            view_bankroll_limit
+            ;;
+        17)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 16."
+            echo "Invalid choice. Please choose a number between 1 and 17."
             ;;
     esac
 done
