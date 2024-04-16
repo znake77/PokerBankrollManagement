@@ -199,7 +199,20 @@ function view_bankroll_limit() {
     echo "Current bankroll limit is: 1,000,000"
 }
 
-# Main loop
+# Adding a new feature to allow the user to view the current bankroll in different currencies.
+# Function to view bankroll in different currencies
+function view_bankroll_in_currency() {
+    read -p "Enter the currency code (USD, EUR, GBP, etc.): " currency
+    if [[ -n "$currency" ]]; then
+        # Assuming we have a function called convert_to_currency that takes the amount and currency code as arguments
+        converted_bankroll=$(convert_to_currency $bankroll $currency)
+        echo "Your current bankroll is: $converted_bankroll $currency"
+    else
+        echo "Invalid input. Please enter a valid currency code."
+    fi
+}
+
+# Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
     echo "1. Add winnings"
@@ -218,7 +231,8 @@ while true; do
     echo "14. Import transaction history"
     echo "15. Export transaction history"
     echo "16. View bankroll limit"
-    echo "17. Exit"
+    echo "17. View bankroll in different currencies"
+    echo "18. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -271,11 +285,14 @@ while true; do
             view_bankroll_limit
             ;;
         17)
+            view_bankroll_in_currency
+            ;;
+        18)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 17."
+            echo "Invalid choice. Please choose a number between 1 and 18."
             ;;
     esac
 done
