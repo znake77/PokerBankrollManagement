@@ -102,14 +102,28 @@ function restore_session() {
         echo "No backup found for this session."
     fi
 }
+# Adding a new feature to allow the user to set a custom bankroll limit.
+# Function to set bankroll limit
+function set_bankroll_limit() {
+    read -p "Enter new bankroll limit: " new_limit
+    if [[ $new_limit =~ ^[0-9]+$ ]]; then
+        if (( new_limit < bankroll )); then
+            echo "New limit cannot be less than current bankroll."
+        else
+            bankroll_limit=$new_limit
+            echo "Bankroll limit set to $bankroll_limit"
+        fi
+    else
+        echo "Invalid input. Please enter a positive number."
+    fi
+}
 
-# Adding a new feature to validate if the bankroll is not exceeding a certain limit.
-# Function to set bankroll
+# Modifying the set_bankroll function to check against the new bankroll limit
 function set_bankroll() {
     read -p "Enter bankroll: " new_bankroll
     if [[ $new_bankroll =~ ^[0-9]+$ ]]; then
-        if (( new_bankroll > 1000000 )); then
-            echo "Bankroll cannot exceed 1,000,000."
+        if (( new_bankroll > bankroll_limit )); then
+            echo "Bankroll cannot exceed $bankroll_limit."
         else
             bankroll=$new_bankroll
             log_transaction "Bankroll set to $bankroll"
@@ -232,6 +246,7 @@ while true; do
     echo "15. Export transaction history"
     echo "16. View bankroll limit"
     echo "17. View bankroll in different currencies"
+    echo "18. Set bankroll limit"
     echo "18. Exit"
     read -p "Enter your choice: " choice
 
@@ -288,6 +303,9 @@ while true; do
             view_bankroll_in_currency
             ;;
         18)
+            set_bankroll_limit
+            ;;
+        19)
             echo "Exiting the program."
             break
             ;;
