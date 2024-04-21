@@ -226,6 +226,16 @@ function view_bankroll_in_currency() {
     fi
 }
 
+# Adding a new feature to allow the user to view the current session's transaction history in a sorted manner.
+# Function to display sorted transaction history
+function display_sorted_history() {
+    if [ -f "$history_file" ]; then
+        sort -n "$history_file"
+    else
+        echo "No transaction history found."
+    fi
+}
+
 # Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
@@ -237,17 +247,18 @@ while true; do
     echo "6. Set session name"
     echo "7. View session name"
     echo "8. Display transaction history"
-    echo "9. Clear transaction history"
-    echo "10. Backup session"
-    echo "11. Restore session from backup"
-    echo "12. Delete session"
-    echo "13. View backup name"
-    echo "14. Import transaction history"
-    echo "15. Export transaction history"
-    echo "16. View bankroll limit"
-    echo "17. View bankroll in different currencies"
-    echo "18. Set bankroll limit"
-    echo "18. Exit"
+    echo "9. Display sorted transaction history"
+    echo "10. Clear transaction history"
+    echo "11. Backup session"
+    echo "12. Restore session from backup"
+    echo "13. Delete session"
+    echo "14. View backup name"
+    echo "15. Import transaction history"
+    echo "16. Export transaction history"
+    echo "17. View bankroll limit"
+    echo "18. View bankroll in different currencies"
+    echo "19. Set bankroll limit"
+    echo "20. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -276,41 +287,44 @@ while true; do
             display_history
             ;;
         9)
-            clear_history
+            display_sorted_history
             ;;
         10)
-            backup_session
+            clear_history
             ;;
         11)
-            restore_session
+            backup_session
             ;;
         12)
-            delete_session
+            restore_session
             ;;
         13)
-            view_backup_name
+            delete_session
             ;;
         14)
-            import_history
+            view_backup_name
             ;;
         15)
-            export_history
+            import_history
             ;;
         16)
-            view_bankroll_limit
+            export_history
             ;;
         17)
-            view_bankroll_in_currency
+            view_bankroll_limit
             ;;
         18)
-            set_bankroll_limit
+            view_bankroll_in_currency
             ;;
         19)
+            set_bankroll_limit
+            ;;
+        20)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 18."
+            echo "Invalid choice. Please choose a number between 1 and 20."
             ;;
     esac
 done
