@@ -236,6 +236,15 @@ function display_sorted_history() {
     fi
 }
 
+# Adding a new feature to allow the user to view the total winnings and losses.
+# Function to display total winnings and losses
+function display_totals() {
+    total_winnings=$(grep -o 'Added [0-9]*' "$history_file" | awk '{sum+=$2} END {print sum}')
+    total_losses=$(grep -o 'Subtracted [0-9]*' "$history_file" | awk '{sum+=$2} END {print sum}')
+    echo "Total winnings: $total_winnings"
+    echo "Total losses: $total_losses"
+}
+
 # Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
@@ -258,7 +267,8 @@ while true; do
     echo "17. View bankroll limit"
     echo "18. View bankroll in different currencies"
     echo "19. Set bankroll limit"
-    echo "20. Exit"
+    echo "20. Display total winnings and losses"
+    echo "21. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -320,11 +330,14 @@ while true; do
             set_bankroll_limit
             ;;
         20)
+            display_totals
+            ;;
+        21)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 20."
+            echo "Invalid choice. Please choose a number between 1 and 21."
             ;;
     esac
 done
