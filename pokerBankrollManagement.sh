@@ -245,6 +245,15 @@ function display_totals() {
     echo "Total losses: $total_losses"
 }
 
+# Adding a new feature to allow the user to view the average winnings and losses.
+# Function to display average winnings and losses
+function display_averages() {
+    total_winnings=$(grep -o 'Added [0-9]*' "$history_file" | awk '{sum+=$2; count++} END {print sum/count}')
+    total_losses=$(grep -o 'Subtracted [0-9]*' "$history_file" | awk '{sum+=$2; count++} END {print sum/count}')
+    echo "Average winnings: $total_winnings"
+    echo "Average losses: $total_losses"
+}
+
 # Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
@@ -268,7 +277,8 @@ while true; do
     echo "18. View bankroll in different currencies"
     echo "19. Set bankroll limit"
     echo "20. Display total winnings and losses"
-    echo "21. Exit"
+    echo "21. Display average winnings and losses"
+    echo "22. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -333,11 +343,14 @@ while true; do
             display_totals
             ;;
         21)
+            display_averages
+            ;;
+        22)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 21."
+            echo "Invalid choice. Please choose a number between 1 and 22."
             ;;
     esac
 done
