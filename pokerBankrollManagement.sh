@@ -253,6 +253,14 @@ function display_averages() {
     echo "Average winnings: $total_winnings"
     echo "Average losses: $total_losses"
 }
+# Adding a new feature to allow the user to view the highest and lowest bankroll.
+# Function to display highest and lowest bankroll
+function display_high_low_bankroll() {
+    highest_bankroll=$(grep -o 'New total: [0-9]*' "$history_file" | awk '{print $3}' | sort -nr | head -n 1)
+    lowest_bankroll=$(grep -o 'New total: [0-9]*' "$history_file" | awk '{print $3}' | sort -n | head -n 1)
+    echo "Highest bankroll: $highest_bankroll"
+    echo "Lowest bankroll: $lowest_bankroll"
+}
 
 # Adding the new feature to the main loop
 while true; do
@@ -278,7 +286,8 @@ while true; do
     echo "19. Set bankroll limit"
     echo "20. Display total winnings and losses"
     echo "21. Display average winnings and losses"
-    echo "22. Exit"
+    echo "22. Display highest and lowest bankroll"
+    echo "23. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -346,11 +355,14 @@ while true; do
             display_averages
             ;;
         22)
+            display_high_low_bankroll
+            ;;
+        23)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 22."
+            echo "Invalid choice. Please choose a number between 1 and 23."
             ;;
     esac
 done
