@@ -262,6 +262,13 @@ function display_high_low_bankroll() {
     echo "Lowest bankroll: $lowest_bankroll"
 }
 
+# Adding a new feature to allow the user to view the number of transactions.
+# Function to display number of transactions
+function display_transaction_count() {
+    transaction_count=$(wc -l < "$history_file")
+    echo "Number of transactions: $transaction_count"
+}
+
 # Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
@@ -287,7 +294,8 @@ while true; do
     echo "20. Display total winnings and losses"
     echo "21. Display average winnings and losses"
     echo "22. Display highest and lowest bankroll"
-    echo "23. Exit"
+    echo "23. Display number of transactions"
+    echo "24. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -358,11 +366,14 @@ while true; do
             display_high_low_bankroll
             ;;
         23)
+            display_transaction_count
+            ;;
+        24)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 23."
+            echo "Invalid choice. Please choose a number between 1 and 24."
             ;;
     esac
 done
