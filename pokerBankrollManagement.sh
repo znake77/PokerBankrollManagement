@@ -276,6 +276,16 @@ function display_most_frequent_transaction() {
     echo "Most frequent transaction: $most_frequent_transaction"
 }
 
+# Adding a new feature to allow the user to view the last transaction.
+# Function to display last transaction
+function display_last_transaction() {
+    if [ -f "$history_file" ]; then
+        tail -n 1 "$history_file"
+    else
+        echo "No transaction history found."
+    fi
+}
+
 # Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
@@ -303,7 +313,8 @@ while true; do
     echo "22. Display highest and lowest bankroll"
     echo "23. Display number of transactions"
     echo "24. Display most frequent transaction"
-    echo "25. Exit"
+    echo "25. Display last transaction"
+    echo "26. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -380,11 +391,14 @@ while true; do
             display_most_frequent_transaction
             ;;
         25)
+            display_last_transaction
+            ;;
+        26)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 25."
+            echo "Invalid choice. Please choose a number between 1 and 26."
             ;;
     esac
 done
