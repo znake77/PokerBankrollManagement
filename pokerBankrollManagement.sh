@@ -285,6 +285,15 @@ function display_last_transaction() {
         echo "No transaction history found."
     fi
 }
+# Adding a new feature to allow the user to view the current session's transaction history in a reverse order.
+# Function to display reversed transaction history
+function display_reversed_history() {
+    if [ -f "$history_file" ]; then
+        tac "$history_file"
+    else
+        echo "No transaction history found."
+    fi
+}
 
 # Adding the new feature to the main loop
 while true; do
@@ -298,23 +307,24 @@ while true; do
     echo "7. View session name"
     echo "8. Display transaction history"
     echo "9. Display sorted transaction history"
-    echo "10. Clear transaction history"
-    echo "11. Backup session"
-    echo "12. Restore session from backup"
-    echo "13. Delete session"
-    echo "14. View backup name"
-    echo "15. Import transaction history"
-    echo "16. Export transaction history"
-    echo "17. View bankroll limit"
-    echo "18. View bankroll in different currencies"
-    echo "19. Set bankroll limit"
-    echo "20. Display total winnings and losses"
-    echo "21. Display average winnings and losses"
-    echo "22. Display highest and lowest bankroll"
-    echo "23. Display number of transactions"
-    echo "24. Display most frequent transaction"
-    echo "25. Display last transaction"
-    echo "26. Exit"
+    echo "10. Display reversed transaction history"
+    echo "11. Clear transaction history"
+    echo "12. Backup session"
+    echo "13. Restore session from backup"
+    echo "14. Delete session"
+    echo "15. View backup name"
+    echo "16. Import transaction history"
+    echo "17. Export transaction history"
+    echo "18. View bankroll limit"
+    echo "19. View bankroll in different currencies"
+    echo "20. Set bankroll limit"
+    echo "21. Display total winnings and losses"
+    echo "22. Display average winnings and losses"
+    echo "23. Display highest and lowest bankroll"
+    echo "24. Display number of transactions"
+    echo "25. Display most frequent transaction"
+    echo "26. Display last transaction"
+    echo "27. Exit"
     read -p "Enter your choice: " choice
 
     case $choice in
@@ -346,54 +356,57 @@ while true; do
             display_sorted_history
             ;;
         10)
-            clear_history
+            display_reversed_history
             ;;
         11)
-            backup_session
+            clear_history
             ;;
         12)
-            restore_session
+            backup_session
             ;;
         13)
-            delete_session
+            restore_session
             ;;
         14)
-            view_backup_name
+            delete_session
             ;;
         15)
-            import_history
+            view_backup_name
             ;;
         16)
-            export_history
+            import_history
             ;;
         17)
-            view_bankroll_limit
+            export_history
             ;;
         18)
-            view_bankroll_in_currency
+            view_bankroll_limit
             ;;
         19)
-            set_bankroll_limit
+            view_bankroll_in_currency
             ;;
         20)
-            display_totals
+            set_bankroll_limit
             ;;
         21)
-            display_averages
+            display_totals
             ;;
         22)
-            display_high_low_bankroll
+            display_averages
             ;;
         23)
-            display_transaction_count
+            display_high_low_bankroll
             ;;
         24)
-            display_most_frequent_transaction
+            display_transaction_count
             ;;
         25)
-            display_last_transaction
+            display_most_frequent_transaction
             ;;
         26)
+            display_last_transaction
+            ;;
+        27)
             echo "Exiting the program."
             break
             ;;
