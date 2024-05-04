@@ -295,6 +295,17 @@ function display_reversed_history() {
     fi
 }
 
+# Adding a new feature to allow the user to view the current session's transaction history filtered by date.
+# Function to display filtered transaction history
+function display_filtered_history() {
+    read -p "Enter the date (format: YYYY-MM-DD): " date
+    if [[ $date =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+        grep "$date" "$history_file"
+    else
+        echo "Invalid date format. Please enter a valid date (format: YYYY-MM-DD)."
+    fi
+}
+
 # Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
@@ -324,8 +335,10 @@ while true; do
     echo "24. Display number of transactions"
     echo "25. Display most frequent transaction"
     echo "26. Display last transaction"
-    echo "27. Exit"
+    echo "28. Display filtered transaction history"
+    echo "29. Exit"
     read -p "Enter your choice: " choice
+
 
     case $choice in
         1)
@@ -406,12 +419,15 @@ while true; do
         26)
             display_last_transaction
             ;;
-        27)
+        28)
+            display_filtered_history
+            ;;
+        29)
             echo "Exiting the program."
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 26."
+            echo "Invalid choice. Please choose a number between 1 and 28."
             ;;
     esac
 done
