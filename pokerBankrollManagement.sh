@@ -306,6 +306,19 @@ function display_filtered_history() {
     fi
 }
 
+# Adding a new feature to allow the user to view the current session's transaction history filtered by transaction type (winnings or losses).
+# Function to display filtered transaction history by type
+function display_filtered_history_by_type() {
+    read -p "Enter the transaction type (winnings or losses): " type
+    if [[ $type == "winnings" ]]; then
+        grep 'Added' "$history_file"
+    elif [[ $type == "losses" ]]; then
+        grep 'Subtracted' "$history_file"
+    else
+        echo "Invalid transaction type. Please enter either 'winnings' or 'losses'."
+    fi
+}
+
 # Adding the new feature to the main loop
 while true; do
     echo "What would you like to do?"
@@ -335,6 +348,7 @@ while true; do
     echo "24. Display number of transactions"
     echo "25. Display most frequent transaction"
     echo "26. Display last transaction"
+    echo "27. Display filtered transaction history by type"
     echo "28. Display filtered transaction history"
     echo "29. Exit"
     read -p "Enter your choice: " choice
@@ -419,6 +433,9 @@ while true; do
         26)
             display_last_transaction
             ;;
+        27)
+            display_filtered_history_by_type
+            ;;
         28)
             display_filtered_history
             ;;
@@ -427,7 +444,7 @@ while true; do
             break
             ;;
         *)
-            echo "Invalid choice. Please choose a number between 1 and 28."
+            echo "Invalid choice. Please choose a number between 1 and 29."
             ;;
     esac
 done
